@@ -41,12 +41,12 @@ const App = () => {
   return (
     <div className="md:mx-36 mx-4">
       <header className="my-4 flex flex-row items-center justify-between rounded-lg bg-[hsl(225,23%,24%)] p-2">
-        <img src={logo} alt=" logo" className="text-white" />
+        <img src={logo} alt="logo" className="h-8 w-auto" />
         <button type="button">
           <img
             src={sun}
             alt="sun"
-            className="rounded-lg bg-[hsl(226,11%,37%)] p-2"
+            className="rounded-lg bg-[hsl(226,11%,37%)] p-2 cursor-pointer"
           />
         </button>
       </header>
@@ -94,13 +94,13 @@ const App = () => {
             <div className="flex flex-row items-center justify-between mt-4">
               <button
                 type="button"
-                className="bg-[hsl(225,23%,24%)] text-white border border-[hsl(0,0%,78%)] rounded-2xl px-2 py-1 hover:bg-[hsl(3,71%,56%)] hover:text-black"
+                className="bg-[hsl(225,23%,24%)] text-white border border-[hsl(0,0%,78%)] rounded-2xl px-2 py-1 hover:bg-[hsl(3,71%,56%)] hover:text-black cursor-pointer"
               >
                 {item.controler}
               </button>
               <div
                 onClick={() => toggleSingleItem(item.id)}
-                className={`relative h-5 w-10 rounded-full ${
+                className={`relative h-5 w-10 rounded-full cursor-pointer ${
                   item.isActive
                     ? "bg-[hsl(3,71%,56%)]"
                     : "bg-[hsl(226,11%,37%)]"
