@@ -1,19 +1,58 @@
 @import "tailwindcss";
 
-@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --bg-color: linear-gradient(180deg, #040918 0%, #091540 100%);
+  --text-color: #ffffff;
+  --header-color: hsl(225, 23%, 24%);
+  --box-bg-color: hsl(226, 25%, 15%);
+  --img-bg: hsl(226, 11%, 37%);
+}
+
+[data-theme="light"] {
+  --bg-color: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%);
+  --text-color: #111111;
+  --header-color: #ffffff;
+  --box-bg-color: #ffffff;
+  --img-bg: hsl(0, 0%, 93%);
+}
+
 body {
   font-family: "Noto Sans", sans-serif;
   font-optical-sizing: auto;
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(180deg, #040918 0%, #091540 100%);
-  color: white;
-  flex: auto;
+  background: var(--bg-color);
+  background-repeat: no-repeat;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
-button:hover {
-  transition-duration: 150ms;
+
+header,
+button {
+  background-color: var(--header-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
+.mode {
+  background-color: var(--img-bg);
+}
+.boxes {
+  background-color: var(--box-bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  transition: background-color 150ms ease;
+  background-color: hsl(3, 71%, 56%);
+}
+
 .app-shell {
   align-self: center;
 }
