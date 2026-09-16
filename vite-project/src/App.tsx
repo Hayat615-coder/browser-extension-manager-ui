@@ -1,17 +1,42 @@
 import "./App.css";
 import logo from "./assets/logo.svg";
 import sun from "./assets/icon-sun.svg";
-import { Information } from "./info";
-import { useState } from "react";
+import { Information, type Info } from "./info";
+import { useState, useEffect } from "react";
 
 const App = () => {
-  const [infos, setInfos] = useState(Information);
+  const [infos, setInfos] = useState<Info[]>(() => {
+    const saved = localStorage.getItem("Information");
+    if (saved) {
+      return JSON.parse(saved) as Info[];
+    }
+    return Information;
+  });
+  const [activeFilter, setActiveFilter] = useState<
+    "all" | "active" | "inactive"
+  >("all");
 
-  const showAll = () => setInfos(Information);
-  const showActive = () =>
-    setInfos(Information.filter((item) => item.isActive));
-  const showInactive = () =>
-    setInfos(Information.filter((item) => !item.isActive));
+  useEffect(() => {
+    localStorage.setItem("Information", JSON.stringify(infos));
+  }, [infos]);
+
+  const toggleSingleItem = (id: number) => {
+    setInfos((currentItems) =>
+      currentItems.map((item) =>
+        item.id === id ? { ...item, isActive: !item.isActive } : item,
+      ),
+    );
+  };
+
+  const visibleInfos = infos.filter((item) => {
+    if (activeFilter === "active") return item.isActive;
+    if (activeFilter === "inactive") return !item.isActive;
+    return true;
+  });
+
+  const showAll = () => setActiveFilter("all");
+  const showActive = () => setActiveFilter("active");
+  const showInactive = () => setActiveFilter("inactive");
 
   return (
     <div className="md:mx-36 mx-4">
@@ -54,10 +79,10 @@ const App = () => {
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {infos.map((item) => (
+        {visibleInfos.map((item) => (
           <div
             key={item.id}
-            className="flex flex-col gap-4 rounded-lg bg-[hsl(225,23%,24%)] p-3"
+            className="flex flex-col gap-4 rounded-3xl bg-[hsl(225,23%,24%)] p-5"
           >
             <div className="flex flex-row gap-3">
               <img src={item.picture} alt={item.name} className="w-16 h-16" />
@@ -66,11 +91,15 @@ const App = () => {
                 <p className="text-[hsl(0,0%,78%)]">{item.activity}</p>
               </div>
             </div>
-            <div className="flex flex-row items-center justify-between">
-              <button type="button" className="text-white">
+            <div className="flex flex-row items-center justify-between mt-4">
+              <button
+                type="button"
+                className="bg-[hsl(225,23%,24%)] text-white border border-[hsl(0,0%,78%)] rounded-2xl px-2 py-1 hover:bg-[hsl(3,71%,56%)] hover:text-black"
+              >
                 {item.controler}
               </button>
               <div
+                onClick={() => toggleSingleItem(item.id)}
                 className={`relative h-5 w-10 rounded-full ${
                   item.isActive
                     ? "bg-[hsl(3,71%,56%)]"
