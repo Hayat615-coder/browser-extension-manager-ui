@@ -1,10 +1,22 @@
 import "./App.css";
 import logo from "./assets/logo.svg";
 import sun from "./assets/icon-sun.svg";
+import moon from "./assets/icon-moon.svg";
 import { Information, type Info } from "./info";
 import { useState, useEffect } from "react";
 
 const App = () => {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("user-theme") || "dark";
+  });
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("user-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
   const [infos, setInfos] = useState<Info[]>(() => {
     const saved = localStorage.getItem("Information");
     if (saved) {
@@ -27,7 +39,9 @@ const App = () => {
       ),
     );
   };
-
+  const removeItem = (id: number) => {
+    setInfos((currentItem) => currentItem.filter((item) => item.id !== id));
+  };
   const visibleInfos = infos.filter((item) => {
     if (activeFilter === "active") return item.isActive;
     if (activeFilter === "inactive") return !item.isActive;
@@ -42,11 +56,11 @@ const App = () => {
     <div className="md:mx-36 mx-4">
       <header className="my-4 flex flex-row items-center justify-between rounded-lg bg-[hsl(225,23%,24%)] p-2">
         <img src={logo} alt="logo" className="h-8 w-auto" />
-        <button type="button">
+        <button type="button" onClick={toggleTheme} aria-label="Toggle Theme">
           <img
-            src={sun}
-            alt="sun"
-            className="rounded-lg bg-[hsl(226,11%,37%)] p-2 cursor-pointer"
+            src={theme === "dark" ? sun : moon}
+            alt={theme === "dark" ? "sun" : "moon"}
+            className="mode rounded-lg bg-[hsl(226,11%,37%)] p-2 cursor-pointer transition-transform active:scale-95"
           />
         </button>
       </header>
@@ -78,11 +92,11 @@ const App = () => {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className=" mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {visibleInfos.map((item) => (
           <div
             key={item.id}
-            className="flex flex-col gap-4 rounded-3xl bg-[hsl(225,23%,24%)] p-5"
+            className="boxes flex flex-col gap-4 rounded-3xl bg-[hsl(225,23%,24%)] p-5"
           >
             <div className="flex flex-row gap-3">
               <img src={item.picture} alt={item.name} className="w-16 h-16" />
@@ -94,6 +108,7 @@ const App = () => {
             <div className="flex flex-row items-center justify-between mt-4">
               <button
                 type="button"
+                onClick={() => removeItem(item.id)}
                 className="bg-[hsl(225,23%,24%)] text-white border border-[hsl(0,0%,78%)] rounded-2xl px-2 py-1 hover:bg-[hsl(3,71%,56%)] hover:text-black cursor-pointer"
               >
                 {item.controler}
