@@ -1,75 +1,50 @@
-# React + TypeScript + Vite
+# 🧩 Extensions Manager App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive React & TypeScript web application designed to browse, filter, toggle, and manage browser extensions. Features dynamic dark/light theme switching and persistent state using `localStorage`.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🌟 Key Features
 
-## React Compiler
+- **🌓 Light & Dark Theme Support**
+  - Toggle between dark and light themes dynamically via `data-theme` attribute on the document root.
+  - Theme choice automatically saves to `localStorage` and persists across sessions.
+- **⚡ Status Filtering**
+  - Filter extensions quickly between **All**, **Active**, and **Inactive** tabs.
+- **🔘 Toggle Switches**
+  - Turn individual extensions on/off with animated custom toggle switches.
+- **🗑️ Dynamic Item Removal**
+  - Delete unwanted extensions directly from your list.
+- **💾 Local Storage Persistence**
+  - Extension state updates (toggles and removals) are automatically synced to `localStorage`.
+- **📱 Responsive Grid Layout**
+  - Built with **Tailwind CSS v4** for clean grid layouts that adapt seamlessly from mobile to desktop.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Framework:** [React 18+](https://react.dev/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons & Assets:** Custom SVG icons
+- **Build Tool:** [Vite](https://vitejs.dev/)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📁 Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```text
+├── vite-project/
+├── src/
+│   ├── assets/
+│   ├── App.tsx          # Main application logic & JSX
+│   ├── App.css          # CSS
+│   ├── index.css          # CSS
+variables, theme styling & Tailwind imports
+│   ├── info.tsx         # Type definition & initial fallback data
+│   └── main.tsx         # React root entry point
+├── package.json
+├── package-lock.js
+└── README.md
 ```
